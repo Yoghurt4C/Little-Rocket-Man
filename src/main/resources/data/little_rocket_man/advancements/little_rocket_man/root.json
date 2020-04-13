@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:clay_ball"
+    },
+    "title": {
+      "translate": "advancements.little_rocket_man.root.title"
+    },
+    "description": {
+      "translate": "advancements.little_rocket_man.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/block/blue_terracotta.png"
+  },
+  "criteria": {
+    "clay": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:clay_ball"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "clay"
+    ]
+  ]
+}

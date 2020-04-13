@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "little_rocket_man",
+  "version": "${version}",
+
+  "name": "Little Rocket Man",
+  "description": "a little for rocket man",
+  "authors": [
+    "Yoghurt4C"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "MMPL-J 1.0",
+  "icon": "assets/little_rocket_man/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "mods.littlerocketman.David"
+    ],
+    "client": [
+      "mods.littlerocketman.client.ChompskiClient"
+    ]
+  },
+  "mixins": [
+    "littlerocketman.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

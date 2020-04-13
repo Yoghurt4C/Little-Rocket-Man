@@ -1,0 +1,28 @@
+{
+  "parent": "little_rocket_man:little_rocket_man/root",
+  "display": {
+    "icon": {
+      "item": "little_rocket_man:david"
+    },
+    "title": {
+      "translate": "advancements.little_rocket_man.main.title"
+    },
+    "description": {
+      "translate": "advancements.little_rocket_man.main.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "little_rocket_man": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "little_rocket_man"
+    ]
+  ]
+}

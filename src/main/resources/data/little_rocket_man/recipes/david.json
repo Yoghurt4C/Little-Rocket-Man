@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cRc",
+    "BSB",
+    "L L"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:clay_ball"
+    },
+    "R": {
+      "item": "minecraft:red_terracotta"
+    },
+    "B": {
+      "item": "minecraft:blue_terracotta"
+    },
+    "L": {
+      "item": "minecraft:gray_terracotta"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    }
+  },
+  "result": {
+    "item": "little_rocket_man:david"
+  }
+}
