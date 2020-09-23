@@ -61,7 +61,7 @@ public class DavidBlockEntityRenderer extends BlockEntityRenderer<ChompskiBlockE
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-90));
         matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(-115));
         matrices.translate(-0.4f, 0.25f, -0.45f);
-        client.getItemRenderer().renderItem(david.getInvStack(0), ModelTransformation.Mode.FIXED, light, overlay, matrices, vcon);
+        client.getItemRenderer().renderItem(david.getStack(0), ModelTransformation.Mode.FIXED, light, overlay, matrices, vcon);
         matrices.pop();
     }
 
@@ -70,7 +70,7 @@ public class DavidBlockEntityRenderer extends BlockEntityRenderer<ChompskiBlockE
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-90));
         matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(-115));
         matrices.translate(-0.4f, 0.25f, 0.45f);
-        client.getItemRenderer().renderItem(david.getInvStack(1), ModelTransformation.Mode.FIXED, light, overlay, matrices, vcon);
+        client.getItemRenderer().renderItem(david.getStack(1), ModelTransformation.Mode.FIXED, light, overlay, matrices, vcon);
         matrices.pop();
     }
     public void renderHeadItem(ChompskiBlockEntity david, MatrixStack matrices, VertexConsumerProvider vcon, int light, int overlay){
@@ -78,7 +78,7 @@ public class DavidBlockEntityRenderer extends BlockEntityRenderer<ChompskiBlockE
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
         matrices.translate(0f, 1.7f, 0.1f);
         matrices.scale(0.75f,0.75f,0.75f);
-        client.getItemRenderer().renderItem(david.getInvStack(2), ModelTransformation.Mode.FIXED, light, overlay, matrices, vcon);
+        client.getItemRenderer().renderItem(david.getStack(2), ModelTransformation.Mode.FIXED, light, overlay, matrices, vcon);
         matrices.pop();
     }
 }

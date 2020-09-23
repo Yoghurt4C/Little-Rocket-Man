@@ -3,7 +3,6 @@ package mods.littlerocketman.blocks;
 import mods.littlerocketman.entities.ChompskiBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -23,9 +22,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-
+import net.minecraft.world.WorldAccess;
 import javax.annotation.Nullable;
 
 public class DavidBlock extends Block implements BlockEntityProvider, Waterloggable {
@@ -80,7 +78,7 @@ public class DavidBlock extends Block implements BlockEntityProvider, Waterlogga
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext context) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
 
@@ -90,12 +88,7 @@ public class DavidBlock extends Block implements BlockEntityProvider, Waterlogga
     }
 
     @Override
-    public boolean isSimpleFullBlock(BlockState state, BlockView view, BlockPos pos) {
-        return false;
-    }
-
-    @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }

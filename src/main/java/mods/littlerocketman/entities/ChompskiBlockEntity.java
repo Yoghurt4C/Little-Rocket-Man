@@ -3,6 +3,7 @@ package mods.littlerocketman.entities;
 import mods.littlerocketman.blocks.DavidBlock;
 import mods.littlerocketman.registry.LRMBlocks;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -11,9 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 
@@ -36,13 +37,13 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
         else if (side.equals(facing.rotateYClockwise())) slot = 1;
         else slot = 2;
         ItemStack stack = player.getStackInHand(hand);
-        ItemStack davidStack = getInvStack(slot);
+        ItemStack davidStack = getStack(slot);
 
         if (!davidStack.isEmpty()) {
             ItemScatterer.spawn(world, pos, DefaultedList.copyOf(ItemStack.EMPTY, davidStack));
-            setInvStack(slot, ItemStack.EMPTY);
+            setStack(slot, ItemStack.EMPTY);
         } else if (!stack.isEmpty()) {
-            setInvStack(slot, new ItemStack(stack.getItem(), 1));
+            setStack(slot, new ItemStack(stack.getItem(), 1));
             stack.decrement(1);
         }
         if (!world.isClient()) {
@@ -53,8 +54,8 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
     }
 
     @Override
-    public void fromTag(CompoundTag tag) {
-        super.fromTag(tag);
+    public void fromTag(BlockState state, CompoundTag tag) {
+        super.fromTag(state, tag);
         betterFromTag(tag,items);
     }
 
@@ -66,7 +67,7 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag){this.fromTag(tag);}
+    public void fromClientTag(CompoundTag tag){betterFromTag(tag,items);}
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag){return this.toTag(tag);}
@@ -78,7 +79,7 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
             for (int i = 0; i < listTag.size(); ++i) {
                 CompoundTag compoundTag = listTag.getCompound(i);
                 int j = compoundTag.getByte("Slot") & 255;
-                if (j >= 0 && j < stacks.size()) {
+                if (j < stacks.size()) {
                     stacks.set(j, ItemStack.fromTag(compoundTag));
                 }
             }
@@ -86,14 +87,14 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
     }
 
     @Override
-    public int getInvSize() {
+    public int size() {
         return 3;
     }
 
     @Override
-    public boolean isInvEmpty() {
-        for (int i = 0; i < getInvSize(); i++) {
-            ItemStack stack = getInvStack(i);
+    public boolean isEmpty() {
+        for (int i = 0; i < size(); i++) {
+            ItemStack stack = getStack(i);
             if (!stack.isEmpty()) {
                 return false;
             }
@@ -102,8 +103,8 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
     }
 
     public boolean isInvFull(){
-        for (int i = 0; i < getInvSize(); i++) {
-            ItemStack stack = getInvStack(i);
+        for (int i = 0; i < size(); i++) {
+            ItemStack stack = getStack(i);
             if (stack.isEmpty()) {
                 return false;
             }
@@ -112,12 +113,12 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
     }
 
     @Override
-    public ItemStack getInvStack(int slot) {
+    public ItemStack getStack(int slot) {
         return items.get(slot);
     }
 
     @Override
-    public ItemStack takeInvStack(int slot, int count) {
+    public ItemStack removeStack(int slot, int count) {
         ItemStack result = Inventories.splitStack(items, slot, count);
         if (!result.isEmpty()) {
             markDirty();
@@ -126,24 +127,24 @@ public class ChompskiBlockEntity extends BlockEntity implements Inventory, Block
     }
 
     @Override
-    public ItemStack removeInvStack(int slot) {
+    public ItemStack removeStack(int slot) {
         return Inventories.removeStack(items, slot);
     }
 
     @Override
-    public void setInvStack(int slot, ItemStack stack) {
+    public void setStack(int slot, ItemStack stack) {
         items.set(slot, stack);
-        if (stack.getCount() > getInvMaxStackAmount()) {
-            stack.setCount(getInvMaxStackAmount());
+        if (stack.getCount() > getMaxCountPerStack()) {
+            stack.setCount(getMaxCountPerStack());
         }
     }
 
     @Override
-    public boolean canPlayerUseInv(PlayerEntity player) { return true; }
+    public boolean canPlayerUse(PlayerEntity player) { return true; }
 
     @Override
     public void clear() {items.clear();}
 
     @Override
-    public int getInvMaxStackAmount() { return 1; }
+    public int getMaxCountPerStack() { return 1; }
 }

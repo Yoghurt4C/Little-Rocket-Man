@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.6-SNAPSHOT'
+	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -7,7 +7,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version
+version = project.mod_version+"+"+project.minecraft_version
 group = project.maven_group
 
 minecraft {
@@ -31,8 +31,11 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modCompile "io.github.prospector:modmenu:${project.mod_menu_version}"
-	modCompile ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") { exclude(module: "ModMenu") }
+	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
+	modImplementation ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
+		exclude(module: "ModMenu")
+		exclude group: "net.fabricmc"
+	 }
 	implementation 'org.jetbrains:annotations:15.0'
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
